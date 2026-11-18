@@ -24,10 +24,62 @@ import sys
 
 def check_plan(plan_path: str) -> int:
     """
-    Returns an exit code: 0 if every resource being created or updated has
-    `landlord_account_id`, non-zero otherwise.
+    Return 0 for compliance, 1 for billing-tag violations, or 2 for invalid input.
+
+    Require a non-blank string landlord_account_id in proposed after.tags.
+    Deduplicate violations by full resource address within this call only.
     """
-    raise NotImplementedError("Implement this.")
+    violations: set[str] = set()
+    try:
+        with open(plan_path, encoding="utf-8") as plan_file:
+            plan = json.load(plan_file)
+
+        if not isinstance(plan, dict):
+            raise ValueError("plan must be a JSON object")
+        resources = plan.get("resource_changes")
+        if not isinstance(resources, list):
+            raise ValueError("resource_changes must be a list (use [] for no changes)")
+
+        for index, resource in enumerate(resources):
+            if not isinstance(resource, dict):
+                raise ValueError(f"resource_changes[{index}] must be an object")
+            address = resource.get("address")
+            if not isinstance(address, str) or not address.strip():
+                raise ValueError(f"resource_changes[{index}] needs a non-blank address")
+            change = resource.get("change")
+            if not isinstance(change, dict):
+                raise ValueError(f"{address}: change must be an object")
+            actions = change.get("actions")
+            if (
+                not isinstance(actions, list)
+                or not actions
+                or not all(isinstance(action, str) and action for action in actions)
+            ):
+                raise ValueError(f"{address}: actions must be a non-empty list of strings")
+
+            # Membership checks include both replacement action orders.
+            if "create" not in actions and "update" not in actions:
+                continue
+
+            after = change.get("after")
+            if not isinstance(after, dict):
+                raise ValueError(f"{address}: actionable change needs an after object")
+            tags = after.get("tags")
+            if tags is None:
+                tags = {}
+            if not isinstance(tags, dict):
+                raise ValueError(f"{address}: tags must be an object or null")
+            account_id = tags.get("landlord_account_id")
+            if not isinstance(account_id, str) or not account_id.strip():
+                violations.add(address)
+
+    except (OSError, UnicodeError, ValueError) as error:
+        print(f"Invalid plan: {error}", file=sys.stderr)
+        return 2
+
+    for address in sorted(violations):
+        print(f"{address}: missing or empty landlord_account_id")
+    return 1 if violations else 0
 
 
 if __name__ == "__main__":
