@@ -1,3 +1,8 @@
+
+##Assessment Recording link
+link: https://drive.google.com/drive/folders/1f6_BeiWENlFW1oYbqkAbxUmwuS0nud4C?usp=sharing 
+
+
 # Haven — Platform Infrastructure Assessment
 
 Haven is a multi-tenant real estate platform.
