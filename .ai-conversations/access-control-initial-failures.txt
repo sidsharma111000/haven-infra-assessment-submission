@@ -1,0 +1,205 @@
+((.venv) ) siddharthsharma@siddharths-MacBook-Pro haven-infra-assessment % python -m pytest tests/test_access_control.py -v
+============================= test session starts ==============================
+platform darwin -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0 -- /Users/siddharthsharma/Documents/haven-infra-assessment/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/siddharthsharma/Documents/haven-infra-assessment
+collected 4 items                                                              
+
+tests/test_access_control.py::test_pm_001_cannot_access_rep_002 FAILED   [ 25%]
+tests/test_access_control.py::test_pm_001_can_access_rep_001 FAILED      [ 50%]
+tests/test_access_control.py::test_missing_report_tenant_denies_access FAILED [ 75%]
+tests/test_access_control.py::test_missing_tenant_property_denies_access FAILED [100%]
+
+=================================== FAILURES ===================================
+______________________ test_pm_001_cannot_access_rep_002 _______________________
+
+property_managers = [PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001'), PropertyManager(id='pm-002', name='Leo Fontaine', landlord_account_id='la-002')]
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+screening_reports = [ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710), ScreeningReport(id='rep-002', tenant_id='ten-002', ssn_last4='5678', credit_score=690)]
+
+    def test_pm_001_cannot_access_rep_002(
+        property_managers, properties, tenants, screening_reports
+    ):
+        actor = next(manager for manager in property_managers if manager.id == "pm-001")
+        report = next(report for report in screening_reports if report.id == "rep-002")
+    
+>       assert can_access_screening_report(
+            actor, report, properties=properties, tenants=tenants
+        ) is False
+
+tests/test_access_control.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actor = PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001')
+report = ScreeningReport(id='rep-002', tenant_id='ten-002', ssn_last4='5678', credit_score=690)
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+
+    def can_access_screening_report(
+        actor: PropertyManager,
+        report: ScreeningReport,
+        *,
+        properties: list[Property],
+        tenants: list[Tenant],
+    ) -> bool:
+        """
+        actor: the PropertyManager requesting access
+        report: the ScreeningReport they're trying to view
+        properties: all known Property records
+        tenants: all known Tenant records
+    
+        Return True if actor may view report, False otherwise. Fail closed — if anything needed to
+        make this determination is missing (tenant not found, property not found), return False.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+app/access_control.py:29: NotImplementedError
+________________________ test_pm_001_can_access_rep_001 ________________________
+
+property_managers = [PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001'), PropertyManager(id='pm-002', name='Leo Fontaine', landlord_account_id='la-002')]
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+screening_reports = [ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710), ScreeningReport(id='rep-002', tenant_id='ten-002', ssn_last4='5678', credit_score=690)]
+
+    def test_pm_001_can_access_rep_001(
+        property_managers, properties, tenants, screening_reports
+    ):
+        actor = next(manager for manager in property_managers if manager.id == "pm-001")
+        report = next(report for report in screening_reports if report.id == "rep-001")
+    
+>       assert can_access_screening_report(
+            actor, report, properties=properties, tenants=tenants
+        ) is True
+
+tests/test_access_control.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actor = PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001')
+report = ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710)
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+
+    def can_access_screening_report(
+        actor: PropertyManager,
+        report: ScreeningReport,
+        *,
+        properties: list[Property],
+        tenants: list[Tenant],
+    ) -> bool:
+        """
+        actor: the PropertyManager requesting access
+        report: the ScreeningReport they're trying to view
+        properties: all known Property records
+        tenants: all known Tenant records
+    
+        Return True if actor may view report, False otherwise. Fail closed — if anything needed to
+        make this determination is missing (tenant not found, property not found), return False.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+app/access_control.py:29: NotImplementedError
+___________________ test_missing_report_tenant_denies_access ___________________
+
+property_managers = [PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001'), PropertyManager(id='pm-002', name='Leo Fontaine', landlord_account_id='la-002')]
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+screening_reports = [ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710), ScreeningReport(id='rep-002', tenant_id='ten-002', ssn_last4='5678', credit_score=690)]
+
+    def test_missing_report_tenant_denies_access(
+        property_managers, properties, tenants, screening_reports
+    ):
+        actor = next(manager for manager in property_managers if manager.id == "pm-001")
+        report = next(report for report in screening_reports if report.id == "rep-001")
+        remaining_tenants = [tenant for tenant in tenants if tenant.id != report.tenant_id]
+    
+>       assert can_access_screening_report(
+            actor, report, properties=properties, tenants=remaining_tenants
+        ) is False
+
+tests/test_access_control.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actor = PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001')
+report = ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710)
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+
+    def can_access_screening_report(
+        actor: PropertyManager,
+        report: ScreeningReport,
+        *,
+        properties: list[Property],
+        tenants: list[Tenant],
+    ) -> bool:
+        """
+        actor: the PropertyManager requesting access
+        report: the ScreeningReport they're trying to view
+        properties: all known Property records
+        tenants: all known Tenant records
+    
+        Return True if actor may view report, False otherwise. Fail closed — if anything needed to
+        make this determination is missing (tenant not found, property not found), return False.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+app/access_control.py:29: NotImplementedError
+__________________ test_missing_tenant_property_denies_access __________________
+
+property_managers = [PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001'), PropertyManager(id='pm-002', name='Leo Fontaine', landlord_account_id='la-002')]
+properties = [Property(id='prop-001', landlord_account_id='la-001', address='12 Maple St'), Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+screening_reports = [ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710), ScreeningReport(id='rep-002', tenant_id='ten-002', ssn_last4='5678', credit_score=690)]
+
+    def test_missing_tenant_property_denies_access(
+        property_managers, properties, tenants, screening_reports
+    ):
+        actor = next(manager for manager in property_managers if manager.id == "pm-001")
+        report = next(report for report in screening_reports if report.id == "rep-001")
+        tenant = next(tenant for tenant in tenants if tenant.id == report.tenant_id)
+        remaining_properties = [
+            property_ for property_ in properties if property_.id != tenant.property_id
+        ]
+    
+>       assert can_access_screening_report(
+            actor, report, properties=remaining_properties, tenants=tenants
+        ) is False
+
+tests/test_access_control.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actor = PropertyManager(id='pm-001', name='Asha Rao', landlord_account_id='la-001')
+report = ScreeningReport(id='rep-001', tenant_id='ten-001', ssn_last4='1234', credit_score=710)
+properties = [Property(id='prop-002', landlord_account_id='la-002', address='88 Birch Ave')]
+tenants = [Tenant(id='ten-001', name='J. Alvarez', property_id='prop-001'), Tenant(id='ten-002', name='S. Okafor', property_id='prop-002')]
+
+    def can_access_screening_report(
+        actor: PropertyManager,
+        report: ScreeningReport,
+        *,
+        properties: list[Property],
+        tenants: list[Tenant],
+    ) -> bool:
+        """
+        actor: the PropertyManager requesting access
+        report: the ScreeningReport they're trying to view
+        properties: all known Property records
+        tenants: all known Tenant records
+    
+        Return True if actor may view report, False otherwise. Fail closed — if anything needed to
+        make this determination is missing (tenant not found, property not found), return False.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+app/access_control.py:29: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_access_control.py::test_pm_001_cannot_access_rep_002 - NotImplementedError: Implement this.
+FAILED tests/test_access_control.py::test_pm_001_can_access_rep_001 - NotImplementedError: Implement this.
+FAILED tests/test_access_control.py::test_missing_report_tenant_denies_access - NotImplementedError: Implement this.
+FAILED tests/test_access_control.py::test_missing_tenant_property_denies_access - NotImplementedError: Implement this.
+============================== 4 failed in 0.04s ===============================
+((.venv) ) siddharthsharma@siddharths-MacBook-Pro haven-infra-assessment %

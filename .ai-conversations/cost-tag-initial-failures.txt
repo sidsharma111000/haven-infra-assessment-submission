@@ -1,0 +1,547 @@
+((.venv) ) siddharthsharma@siddharths-MacBook-Pro haven-infra-assessment %                                                                                 python -m pytest tests/test_cost_tag_check.py -v
+============================= test session starts ==============================n -m pytest tests/test_cost_tag_check.py -v
+platform darwin -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0 -- /Users/siddharthsharma/Documents/haven-infra-assessment/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/siddharthsharma/Documents/haven-infra-assessment
+collected 16 items                                                             
+
+tests/test_cost_tag_check.py::test_fixture_reports_exactly_the_two_missing_billing_tags FAILED [  6%]
+tests/test_cost_tag_check.py::test_correctly_tagged_actionable_resource_passes[actions0] FAILED [ 12%]
+tests/test_cost_tag_check.py::test_correctly_tagged_actionable_resource_passes[actions1] FAILED [ 18%]
+tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions0] FAILED [ 25%]
+tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions1] FAILED [ 31%]
+tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions2] FAILED [ 37%]
+tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[False-actions0] FAILED [ 43%]
+tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[False-actions1] FAILED [ 50%]
+tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[True-actions0] FAILED [ 56%]
+tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[True-actions1] FAILED [ 62%]
+tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions0] FAILED [ 68%]
+tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions1] FAILED [ 75%]
+tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions0] FAILED [ 81%]
+tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions1] FAILED [ 87%]
+tests/test_cost_tag_check.py::test_repeated_calls_have_identical_exit_code_and_output FAILED [ 93%]
+tests/test_cost_tag_check.py::test_duplicate_full_addresses_are_reported_once FAILED [100%]
+
+=================================== FAILURES ===================================
+__________ test_fixture_reports_exactly_the_two_missing_billing_tags ___________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x10895f440>
+
+    def test_fixture_reports_exactly_the_two_missing_billing_tags(capsys):
+>       result = check_plan(str(PLAN_FIXTURE))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/Users/siddharthsharma/Documents/haven-infra-assessment/fixtures/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+__________ test_correctly_tagged_actionable_resource_passes[actions0] __________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_correctly_tagged_actionab0')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089a3f80>
+actions = ['create']
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    def test_correctly_tagged_actionable_resource_passes(tmp_path, capsys, actions):
+        address = "aws_sqs_queue.billing_events"
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"landlord_account_id": "la-001"}
+        )])
+    
+>       assert check_plan(plan_path) == 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_correctly_tagged_actionab0/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+__________ test_correctly_tagged_actionable_resource_passes[actions1] __________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_correctly_tagged_actionab1')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fdb50>
+actions = ['update']
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    def test_correctly_tagged_actionable_resource_passes(tmp_path, capsys, actions):
+        address = "aws_sqs_queue.billing_events"
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"landlord_account_id": "la-001"}
+        )])
+    
+>       assert check_plan(plan_path) == 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_correctly_tagged_actionab1/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+______________ test_non_actionable_resource_is_skipped[actions0] _______________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i0')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fdca0>
+actions = ['no-op']
+
+    @pytest.mark.parametrize("actions", [["no-op"], ["read"], ["delete"]])
+    def test_non_actionable_resource_is_skipped(tmp_path, capsys, actions):
+        address = "aws_sqs_queue.untagged_unchanged"
+        resource = resource_change(address, actions, {})
+        if actions == ["delete"]:
+            del resource["change"]["after"]
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       assert check_plan(plan_path) == 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i0/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+______________ test_non_actionable_resource_is_skipped[actions1] _______________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i1')
+capsys = <_pytest.capture.CaptureFixture object at 0x10895cfb0>
+actions = ['read']
+
+    @pytest.mark.parametrize("actions", [["no-op"], ["read"], ["delete"]])
+    def test_non_actionable_resource_is_skipped(tmp_path, capsys, actions):
+        address = "aws_sqs_queue.untagged_unchanged"
+        resource = resource_change(address, actions, {})
+        if actions == ["delete"]:
+            del resource["change"]["after"]
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       assert check_plan(plan_path) == 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i1/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+______________ test_non_actionable_resource_is_skipped[actions2] _______________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i2')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089ff020>
+actions = ['delete']
+
+    @pytest.mark.parametrize("actions", [["no-op"], ["read"], ["delete"]])
+    def test_non_actionable_resource_is_skipped(tmp_path, capsys, actions):
+        address = "aws_sqs_queue.untagged_unchanged"
+        resource = resource_change(address, actions, {})
+        if actions == ["delete"]:
+            del resource["change"]["after"]
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       assert check_plan(plan_path) == 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_non_actionable_resource_i2/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+____________ test_replacement_checks_the_after_tags[False-actions0] ____________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af0')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fdaf0>
+actions = ['delete', 'create'], tagged = False
+
+    @pytest.mark.parametrize("actions", [["delete", "create"], ["create", "delete"]])
+    @pytest.mark.parametrize("tagged", [False, True])
+    def test_replacement_checks_the_after_tags(tmp_path, capsys, actions, tagged):
+        address = "aws_sns_topic.replaced_notifications"
+        tags = {"landlord_account_id": "la-002"} if tagged else {}
+        resource = resource_change(address, actions, tags)
+        # Opposite before-tags ensure the check validates the proposed replacement.
+        resource["change"]["before"] = {
+            "tags": {} if tagged else {"landlord_account_id": "la-002"}
+        }
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       result = check_plan(plan_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af0/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+____________ test_replacement_checks_the_after_tags[False-actions1] ____________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af1')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fe660>
+actions = ['create', 'delete'], tagged = False
+
+    @pytest.mark.parametrize("actions", [["delete", "create"], ["create", "delete"]])
+    @pytest.mark.parametrize("tagged", [False, True])
+    def test_replacement_checks_the_after_tags(tmp_path, capsys, actions, tagged):
+        address = "aws_sns_topic.replaced_notifications"
+        tags = {"landlord_account_id": "la-002"} if tagged else {}
+        resource = resource_change(address, actions, tags)
+        # Opposite before-tags ensure the check validates the proposed replacement.
+        resource["change"]["before"] = {
+            "tags": {} if tagged else {"landlord_account_id": "la-002"}
+        }
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       result = check_plan(plan_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af1/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+____________ test_replacement_checks_the_after_tags[True-actions0] _____________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af2')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fea80>
+actions = ['delete', 'create'], tagged = True
+
+    @pytest.mark.parametrize("actions", [["delete", "create"], ["create", "delete"]])
+    @pytest.mark.parametrize("tagged", [False, True])
+    def test_replacement_checks_the_after_tags(tmp_path, capsys, actions, tagged):
+        address = "aws_sns_topic.replaced_notifications"
+        tags = {"landlord_account_id": "la-002"} if tagged else {}
+        resource = resource_change(address, actions, tags)
+        # Opposite before-tags ensure the check validates the proposed replacement.
+        resource["change"]["before"] = {
+            "tags": {} if tagged else {"landlord_account_id": "la-002"}
+        }
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       result = check_plan(plan_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af2/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+____________ test_replacement_checks_the_after_tags[True-actions1] _____________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af3')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fcd10>
+actions = ['create', 'delete'], tagged = True
+
+    @pytest.mark.parametrize("actions", [["delete", "create"], ["create", "delete"]])
+    @pytest.mark.parametrize("tagged", [False, True])
+    def test_replacement_checks_the_after_tags(tmp_path, capsys, actions, tagged):
+        address = "aws_sns_topic.replaced_notifications"
+        tags = {"landlord_account_id": "la-002"} if tagged else {}
+        resource = resource_change(address, actions, tags)
+        # Opposite before-tags ensure the check validates the proposed replacement.
+        resource["change"]["before"] = {
+            "tags": {} if tagged else {"landlord_account_id": "la-002"}
+        }
+        plan_path = write_plan(tmp_path, [resource])
+    
+>       result = check_plan(plan_path)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_replacement_checks_the_af3/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+_ test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions0] _
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are0')
+capsys = <_pytest.capture.CaptureFixture object at 0x1089fe930>
+actions = ['create'], address = 'aws_sqs_queue.unlisted_queue'
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    @pytest.mark.parametrize("address", [
+        "aws_sqs_queue.unlisted_queue",
+        "aws_dynamodb_table.unlisted_table",
+    ])
+    def test_other_types_and_names_are_checked(tmp_path, capsys, actions, address):
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"tenant_id": "ten-001"}
+        )])
+    
+>       assert check_plan(plan_path) != 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are0/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+_ test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions1] _
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are1')
+capsys = <_pytest.capture.CaptureFixture object at 0x108a11c10>
+actions = ['update'], address = 'aws_sqs_queue.unlisted_queue'
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    @pytest.mark.parametrize("address", [
+        "aws_sqs_queue.unlisted_queue",
+        "aws_dynamodb_table.unlisted_table",
+    ])
+    def test_other_types_and_names_are_checked(tmp_path, capsys, actions, address):
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"tenant_id": "ten-001"}
+        )])
+    
+>       assert check_plan(plan_path) != 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are1/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+_ test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions0] _
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are2')
+capsys = <_pytest.capture.CaptureFixture object at 0x108a112e0>
+actions = ['create'], address = 'aws_dynamodb_table.unlisted_table'
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    @pytest.mark.parametrize("address", [
+        "aws_sqs_queue.unlisted_queue",
+        "aws_dynamodb_table.unlisted_table",
+    ])
+    def test_other_types_and_names_are_checked(tmp_path, capsys, actions, address):
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"tenant_id": "ten-001"}
+        )])
+    
+>       assert check_plan(plan_path) != 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are2/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+_ test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions1] _
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are3')
+capsys = <_pytest.capture.CaptureFixture object at 0x108a11a90>
+actions = ['update'], address = 'aws_dynamodb_table.unlisted_table'
+
+    @pytest.mark.parametrize("actions", [["create"], ["update"]])
+    @pytest.mark.parametrize("address", [
+        "aws_sqs_queue.unlisted_queue",
+        "aws_dynamodb_table.unlisted_table",
+    ])
+    def test_other_types_and_names_are_checked(tmp_path, capsys, actions, address):
+        plan_path = write_plan(tmp_path, [resource_change(
+            address, actions, {"tenant_id": "ten-001"}
+        )])
+    
+>       assert check_plan(plan_path) != 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_other_types_and_names_are3/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+___________ test_repeated_calls_have_identical_exit_code_and_output ____________
+
+capsys = <_pytest.capture.CaptureFixture object at 0x108a13f50>
+
+    def test_repeated_calls_have_identical_exit_code_and_output(capsys):
+>       first_result = check_plan(str(PLAN_FIXTURE))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/Users/siddharthsharma/Documents/haven-infra-assessment/fixtures/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+_______________ test_duplicate_full_addresses_are_reported_once ________________
+
+tmp_path = PosixPath('/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_duplicate_full_addresses_0')
+capsys = <_pytest.capture.CaptureFixture object at 0x108a137d0>
+
+    def test_duplicate_full_addresses_are_reported_once(tmp_path, capsys):
+        first_address = 'module.east.aws_sqs_queue.events["la-001"]'
+        second_address = 'module.west.aws_sqs_queue.events["la-001"]'
+        first = {
+            "address": first_address,
+            "type": "aws_sqs_queue",
+            "name": "events",
+            "change": {"actions": ["create"], "after": {"tags": {}}},
+        }
+        second = {**first, "address": second_address}
+        plan_path = write_plan(tmp_path, [first, second, first, second])
+    
+>       assert check_plan(plan_path) != 0
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cost_tag_check.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+plan_path = '/private/var/folders/dx/76wx5_z55t1gyx0xzql12rzm0000gn/T/pytest-of-siddharthsharma/pytest-0/test_duplicate_full_addresses_0/plan.json'
+
+    def check_plan(plan_path: str) -> int:
+        """
+        Returns an exit code: 0 if every resource being created or updated has
+        `landlord_account_id`, non-zero otherwise.
+        """
+>       raise NotImplementedError("Implement this.")
+E       NotImplementedError: Implement this.
+
+scripts/cost_tag_check.py:30: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_cost_tag_check.py::test_fixture_reports_exactly_the_two_missing_billing_tags - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_correctly_tagged_actionable_resource_passes[actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_correctly_tagged_actionable_resource_passes[actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_non_actionable_resource_is_skipped[actions2] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[False-actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[False-actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[True-actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_replacement_checks_the_after_tags[True-actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_sqs_queue.unlisted_queue-actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions0] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_other_types_and_names_are_checked[aws_dynamodb_table.unlisted_table-actions1] - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_repeated_calls_have_identical_exit_code_and_output - NotImplementedError: Implement this.
+FAILED tests/test_cost_tag_check.py::test_duplicate_full_addresses_are_reported_once - NotImplementedError: Implement this.
+============================== 16 failed in 0.07s ==============================
+((.venv) ) siddharthsharma@siddharths-MacBook-Pro haven-infra-assessment %
